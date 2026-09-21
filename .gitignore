@@ -1,0 +1,45 @@
+# ============================================================
+# Git Ignore - Bitácora Hidroeléctrica
+# ============================================================
+
+# Environment variables
+.env
+
+# Backend (Java / Maven)
+backend/target/
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Frontend (Node / Vite / React)
+frontend/node_modules/
+**/node_modules/
+frontend/dist/
+**/dist/
+frontend/build/
+**/build/
+frontend/.cache/
+frontend/.vite/
+*.tsbuildinfo
+vite.config.*.timestamp-*
+
+# Logs
+logs/
+*.log
+*-debug.log*
+
+# IDE & OS
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+*.tmp
+*~
+
+# Figma Make artifacts
+/.figma/design-context/
+/.plugins/
+/.opencode-skills/

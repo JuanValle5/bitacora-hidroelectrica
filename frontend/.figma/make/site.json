@@ -1,0 +1,10 @@
+{
+  "description": "Streamline hydroelectric plant operations with real-time data entry, monitoring, and user management for operators and administrators.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

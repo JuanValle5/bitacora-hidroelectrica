@@ -1,0 +1,74 @@
+services:
+  # ============================================================
+  # 1. Base de Datos PostgreSQL
+  # ============================================================
+  db:
+    image: postgres:17-alpine
+    container_name: bitacora-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-bitacora_db}
+      POSTGRES_USER: ${POSTGRES_USER:-bitacora_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bitacora_password}
+      TZ: ${TZ:-America/Bogota}
+    volumes:
+      - bitacora_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5434}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bitacora_user} -d ${POSTGRES_DB:-bitacora_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bitacora-net
+
+  # ============================================================
+  # 2. Backend Spring Boot (Java 21)
+  # ============================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bitacora-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-bitacora_db}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-bitacora_user}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-bitacora_password}
+      SERVER_PORT: ${BACKEND_PORT:-8081}
+      JWT_SECRET: ${JWT_SECRET:-404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      TZ: ${TZ:-America/Bogota}
+    ports:
+      - "${BACKEND_PORT:-8081}:8081"
+    networks:
+      - bitacora-net
+
+  # ============================================================
+  # 3. Frontend React SPA (Nginx)
+  # ============================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8081/api/v1}
+    container_name: bitacora-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-8443}:80"
+    networks:
+      - bitacora-net
+
+volumes:
+  bitacora_postgres_data:
+    driver: local
+
+networks:
+  bitacora-net:
+    driver: bridge

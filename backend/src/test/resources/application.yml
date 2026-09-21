@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: bitacora-hidroelectrica-test
+  datasource:
+    url: jdbc:h2:mem:bitacora_test;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;NON_KEYWORDS=HOUR
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        auto_quote_keyword: true
+
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  expiration-ms: 28800000

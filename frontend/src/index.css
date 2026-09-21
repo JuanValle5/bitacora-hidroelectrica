@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* ── Corporate theme tokens ─────────────────────────────────────── */
+:root {
+  --c-bg:       #0d1117;
+  --c-s1:       #161b22;
+  --c-s2:       #21262d;
+  --c-s3:       #2d333b;
+  --c-b1:       #30363d;
+  --c-b2:       #3d444d;
+  --c-b3:       #21262d;
+
+  --c-t1:       #e6edf3;
+  --c-t2:       #c9d1d9;
+  --c-t3:       #8b949e;
+  --c-t4:       #484f58;
+  --c-t5:       #2d333b;
+
+  --c-blue:     #2f81f7;
+  --c-blue-h:   #388bfd;
+  --c-blue-d:   #1f6feb;
+  --c-blue-l:   #79c0ff;
+  --c-blue-dim: #1c2c3f;
+
+  --c-green:    #3fb950;
+  --c-green-bg: #1a2e1a;
+  --c-green-l:  #56d364;
+
+  --c-amber:    #e3b341;
+  --c-amber-bg: #2e2410;
+  --c-amber-l:  #f0c040;
+
+  --c-red:      #f85149;
+  --c-red-bg:   #2e1515;
+
+  --c-purple:   #bc8cff;
+  --c-teal:     #39d353;
+
+  --c-calc-bg:  #0d1117;
+  --c-calc-txt: #79c0ff;
+  --c-edit-bg:  #161b22;
+}
+
+/* ── Base ────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { color-scheme: dark; }
+
+  body {
+    background-color: var(--c-bg);
+    color: var(--c-t2);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--c-b1); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--c-b2); }
+}
+
+/* ── Grid cell styles ────────────────────────────────────────────── */
+.cell-edit {
+  background-color: var(--c-edit-bg);
+  color: var(--c-t1);
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 0 6px;
+  transition: background-color 0.1s, box-shadow 0.1s;
+}
+.cell-edit:focus {
+  background-color: var(--c-blue-dim);
+  box-shadow: inset 0 0 0 1px var(--c-blue);
+}
+.cell-edit::placeholder { color: var(--c-t5); }
+.cell-edit:disabled { opacity: 0.25; cursor: not-allowed; }
+
+.cell-calc {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-calc-txt);
+  background-color: var(--c-calc-bg);
+  text-align: right;
+  padding: 0 6px;
+}
+
+/* ── Topo background (subtle neutral grid) ───────────────────────── */
+.topo-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── Row states ──────────────────────────────────────────────────── */
+tr.row-current { background-color: rgba(227,179,65,0.05); }
+tr.row-current td { border-bottom-color: rgba(227,179,65,0.2) !important; }
+tr.row-past:hover td { background-color: rgba(255,255,255,0.015); }
+
+/* ── Animations ──────────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+.pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+.modal-backdrop { animation: fadein 0.15s ease; }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+.modal-card { animation: slideup 0.18s ease; }
+@keyframes slideup { from { transform: translateY(6px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
