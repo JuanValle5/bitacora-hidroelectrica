@@ -48,8 +48,8 @@ public class PdfExportService {
         streamContent.append("0 -10 Td\n");
         streamContent.append("(-----------------------------------------------------------------------------------------------------------------------) Tj\n");
 
-        List<HourlyReading> sorted = new ArrayList<>(report.getReadings());
-        sorted.sort(Comparator.comparingInt(HourlyReading::getHour));
+        List<HourlyReading> sorted = new ArrayList<>(report.getReadings() != null ? report.getReadings() : List.of());
+        sorted.sort(Comparator.comparing(HourlyReading::getHour, Comparator.nullsLast(Integer::compareTo)));
 
         double totalGenBruta = 0;
         double totalG1 = 0;
