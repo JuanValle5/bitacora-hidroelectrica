@@ -23,5 +23,12 @@ Aplicación web para la gestión y registro operativo de una central hidroeléct
 - No añadas dependencias (en `pom.xml` o `package.json`) ni cambies el esquema de la base de datos sin actualizar antes la spec.
 - No modifiques archivos dentro de `specs/` salvo petición explícita.
 
+## Control de Versiones (Git / GitHub)
+- Repositorio remoto en GitHub: `git@github.com:JuanValle5/bitacora-hidroelectrica.git`.
+- Registrar cada corrección, mejora o funcionalidad mediante commits atómicos y claros siguiendo la convención de Conventional Commits (ej. `feat:`, `fix:`, `docs:`, `refactor:`, `chore:`).
+- Al completar y validar cada tarea, enviar los cambios al repositorio remoto (`git push origin main` o la rama activa).
+- Asegurarse de que el `.gitignore` proteja archivos de entorno con secretos (`.env`), carpetas de dependencias (`node_modules/`) y compilados (`target/`, `dist/`).
+
 ## Al terminar cualquier tarea
-- Ejecuta los tests del backend (`./mvnw test`) y del frontend (`npm run test`) y confirma en tu respuesta que ambos pasan correctamente y sin errores de tipado.
+1. Ejecuta los tests del backend (`./mvnw test`) y del frontend (`npm run test`) y confirma en tu respuesta que ambos pasan correctamente y sin errores de tipado.
+2. Realiza el commit descriptivo de los cambios y súbelo al repositorio remoto en GitHub (`git push origin <rama>`).
